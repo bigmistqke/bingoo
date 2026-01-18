@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx degit solidjs/templates/ts .)",
+      "Bash(npx degit:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm create solid .)",
+      "Bash(pnpm create:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
