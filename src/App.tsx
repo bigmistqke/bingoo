@@ -100,6 +100,8 @@ function AutoSizingText(props: AutoSizingTextProps) {
 }
 
 const App = () => {
+  let textareaRef: HTMLTextAreaElement | undefined;
+
   const [text, setText] = createSignal('');
   const [rows, setRows] = createSignal(5);
   const [cols, setCols] = createSignal(5);
@@ -175,13 +177,21 @@ const App = () => {
     }
   });
 
-  const items = createMemo(() => {
-    const lines = text()
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => line.length > 0);
-    return lines;
+  const itemsWithLineInfo = createMemo(() => {
+    const lines = text().split('\n');
+    const result: { text: string; start: number; end: number }[] = [];
+    let pos = 0;
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed.length > 0) {
+        result.push({ text: trimmed, start: pos, end: pos + line.length });
+      }
+      pos += line.length + 1; // +1 for newline
+    }
+    return result;
   });
+
+  const items = createMemo(() => itemsWithLineInfo().map(item => item.text));
 
   const gridItems = createMemo(() => {
     const total = rows() * cols();
@@ -230,13 +240,22 @@ const App = () => {
   };
 
   const handleCellClick = (index: number) => {
-    if (!playMode()) return;
-
-    setSelected(prev =>
-      prev.includes(index)
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
+    if (playMode()) {
+      setSelected(prev =>
+        prev.includes(index)
+          ? prev.filter(i => i !== index)
+          : [...prev, index]
+      );
+    } else {
+      // Edit mode: select the corresponding line in textarea
+      const indices = shuffledIndices();
+      const itemIndex = indices ? indices[index] : index;
+      const lineInfo = itemsWithLineInfo()[itemIndex];
+      if (lineInfo && textareaRef) {
+        textareaRef.focus();
+        textareaRef.setSelectionRange(lineInfo.start, lineInfo.end);
+      }
+    }
   };
 
   const handlePlay = () => {
@@ -309,6 +328,7 @@ const App = () => {
           </div>
 
           <textarea
+            ref={textareaRef}
             class={styles.textarea}
             placeholder="Enter one item per line..."
             value={text()}
@@ -342,7 +362,7 @@ const App = () => {
               <div
                 class={styles.cell}
                 classList={{
-                  [styles.cellClickable]: playMode(),
+                  [styles.cellClickable]: playMode() || item,
                   [styles.cellSelected]: isSelected(index()),
                 }}
                 onClick={() => handleCellClick(index())}
