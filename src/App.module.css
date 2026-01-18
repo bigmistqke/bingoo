@@ -214,8 +214,6 @@
 
 .autoSizeText {
   line-height: 1.2;
-  word-break: break-word;
-  overflow-wrap: break-word;
   text-align: center;
   max-width: 100%;
 }
