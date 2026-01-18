@@ -262,37 +262,56 @@ const App = () => {
 
   return (
     <div class={styles.container} classList={{ [styles.playModeContainer]: playMode() }}>
+      <Show when={hasBingo()}>
+        <div class={styles.bingoOverlay}>
+          <div class={styles.bingoText}>BINGO!</div>
+        </div>
+      </Show>
+
       <Show when={!playMode()}>
-        <div class={styles.controls}>
-          <div class={styles.inputGroup}>
-            <label>Rows:</label>
-            <input
-              type="number"
-              min="1"
-              max="10"
-              value={rows()}
-              onInput={(e) => handleRowsChange(parseInt(e.currentTarget.value) || 1)}
-            />
+        <div class={styles.sidebar}>
+          <div class={styles.buttons}>
+            <button class={styles.button} onClick={handleRandomize}>
+              Randomize
+            </button>
+            <button class={styles.button} onClick={handlePlay}>
+              Play
+            </button>
           </div>
-          <div class={styles.inputGroup}>
-            <label>Columns:</label>
-            <input
-              type="number"
-              min="1"
-              max="10"
-              value={cols()}
-              onInput={(e) => handleColsChange(parseInt(e.currentTarget.value) || 1)}
-            />
+
+          <div class={styles.controls}>
+            <div class={styles.inputGroup}>
+              <label>Rows:</label>
+              <input
+                type="number"
+                min="1"
+                max="10"
+                value={rows()}
+                onInput={(e) => handleRowsChange(parseInt(e.currentTarget.value) || 1)}
+              />
+            </div>
+            <div class={styles.inputGroup}>
+              <label>Columns:</label>
+              <input
+                type="number"
+                min="1"
+                max="10"
+                value={cols()}
+                onInput={(e) => handleColsChange(parseInt(e.currentTarget.value) || 1)}
+              />
+            </div>
           </div>
+
           <div class={styles.count}>
             {items().length} / {rows() * cols()} items
           </div>
-          <button class={styles.button} onClick={handleRandomize}>
-            Randomize
-          </button>
-          <button class={styles.button} onClick={handlePlay}>
-            Play
-          </button>
+
+          <textarea
+            class={styles.textarea}
+            placeholder="Enter one item per line..."
+            value={text()}
+            onInput={(e) => handleTextChange(e.currentTarget.value)}
+          />
         </div>
       </Show>
 
@@ -307,22 +326,7 @@ const App = () => {
         </div>
       </Show>
 
-      <Show when={hasBingo()}>
-        <div class={styles.bingoOverlay}>
-          <div class={styles.bingoText}>BINGO!</div>
-        </div>
-      </Show>
-
-      <div class={styles.main}>
-        <Show when={!playMode()}>
-          <textarea
-            class={styles.textarea}
-            placeholder="Enter one item per line..."
-            value={text()}
-            onInput={(e) => handleTextChange(e.currentTarget.value)}
-          />
-        </Show>
-
+      <div class={styles.gridContainer}>
         <div
           class={styles.grid}
           classList={{ [styles.gridPlayMode]: playMode() }}

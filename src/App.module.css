@@ -2,26 +2,75 @@
   min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 250px 1fr;
   gap: 20px;
+}
+
+@media (orientation: portrait) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
 }
 
 .playModeContainer {
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
+  grid-template-columns: 1fr;
+  place-items: center;
+}
+
+.sidebar {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 16px;
+}
+
+@media (orientation: portrait) {
+  .sidebar {
+    grid-row: 2;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 12px;
+  }
+
+  .sidebar .buttons {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .sidebar .controls {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .sidebar .count {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .sidebar .textarea {
+    grid-column: 1 / 4;
+    grid-row: 2;
+  }
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
 }
 
 .controls {
-  display: flex;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 12px;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 .playControls {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   gap: 10px;
   position: absolute;
   top: 20px;
@@ -30,13 +79,15 @@
 }
 
 .inputGroup {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
   gap: 8px;
 }
 
 .inputGroup label {
-  font-weight: 500;
+  font-size: 14px;
+  color: #666;
 }
 
 .inputGroup input {
@@ -71,23 +122,22 @@
   background: #004494;
 }
 
-.main {
-  display: flex;
-  gap: 20px;
-  flex: 1;
-  min-height: 0;
-}
-
 .textarea {
-  width: 250px;
-  min-height: 400px;
+  min-height: 0;
+  height: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 14px;
   font-family: inherit;
-  resize: vertical;
+  resize: none;
   line-height: 1.5;
+}
+
+@media (orientation: portrait) {
+  .textarea {
+    min-height: 120px;
+  }
 }
 
 .textarea:focus {
@@ -96,13 +146,28 @@
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
+.gridContainer {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  min-width: 0;
+}
+
 .grid {
-  flex: 1;
   display: grid;
   gap: 4px;
   aspect-ratio: 1;
   max-height: 80vh;
   max-width: 80vh;
+  width: 100%;
+  height: 100%;
+}
+
+@media (orientation: portrait) {
+  .grid {
+    max-height: 50vh;
+    max-width: 100%;
+  }
 }
 
 .gridPlayMode {
@@ -110,12 +175,17 @@
   max-width: 90vh;
 }
 
+@media (orientation: portrait) {
+  .gridPlayMode {
+    max-height: 80vh;
+  }
+}
+
 .cell {
   border: 2px solid #333;
   border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   padding: 8px;
   text-align: center;
   overflow: hidden;
@@ -144,9 +214,8 @@
 .autoSizeContainer {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   overflow: hidden;
 }
 
@@ -165,9 +234,8 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   z-index: 100;
   animation: fadeIn 0.3s ease-out;
 }
