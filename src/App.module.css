@@ -1,5 +1,5 @@
 .container {
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 20px;
   box-sizing: border-box;
   display: grid;
@@ -155,22 +155,22 @@
   display: grid;
   gap: 4px;
   aspect-ratio: 1;
-  width: min(80vh, 100%);
+  width: min(80dvh, 100%);
 }
 
 @media (orientation: portrait) {
   .grid {
-    width: min(50vh, 100%);
+    width: min(50dvh, 100%);
   }
 }
 
 .gridPlayMode {
-  width: min(90vh, 90vw);
+  width: min(90dvh, 90dvw);
 }
 
 @media (orientation: portrait) {
   .gridPlayMode {
-    width: min(80vh, 90vw);
+    width: min(80dvh, 90dvw);
   }
 }
 
