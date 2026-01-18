@@ -262,11 +262,13 @@ const App = () => {
 
   return (
     <div class={styles.container} classList={{ [styles.playModeContainer]: playMode() }}>
-      <Show when={hasBingo()}>
-        <div class={styles.bingoOverlay}>
-          <div class={styles.bingoText}>BINGO!</div>
-        </div>
-      </Show>
+      <div
+        class={styles.bingoOverlay}
+        classList={{ [styles.bingoOverlayVisible]: hasBingo() }}
+        onClick={() => setHasBingo(false)}
+      >
+        <div class={styles.bingoText}>BINGO!</div>
+      </div>
 
       <Show when={!playMode()}>
         <div class={styles.sidebar}>

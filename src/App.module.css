@@ -165,12 +165,12 @@
 }
 
 .gridPlayMode {
-  width: min(90vh, 100%);
+  width: min(90vh, 90vw);
 }
 
 @media (orientation: portrait) {
   .gridPlayMode {
-    width: min(80vh, 100%);
+    width: min(80vh, 90vw);
   }
 }
 
@@ -226,39 +226,28 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: grid;
+  background: rgba(255, 255, 255, 0.9);
+  display: none;
   place-items: center;
   z-index: 100;
-  animation: fadeIn 0.3s ease-out;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    display 0.3s ease allow-discrete;
 }
 
-@keyframes fadeIn {
-  from {
+.bingoOverlayVisible {
+  display: grid;
+  opacity: 1;
+
+  @starting-style {
     opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 
 .bingoText {
-  font-size: 120px;
-  font-weight: bold;
-  color: #FFD700;
-  text-shadow:
-    0 0 20px #FFD700,
-    0 0 40px #FFA500,
-    0 0 60px #FF6347,
-    4px 4px 0 #333;
-  animation: pulse 0.5s ease-in-out infinite alternate;
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-  }
+  font-size: 48px;
+  font-weight: 600;
+  color: #333;
 }
